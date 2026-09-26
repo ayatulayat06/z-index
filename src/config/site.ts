@@ -76,10 +76,3 @@ export const SITE_CONFIG = {
   },
   copyright: '© 2026-27 Z-INDEX. All rights reserved.'
 };
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  output: "export",
-};
-
-export default nextConfig;
