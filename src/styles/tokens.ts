@@ -1,0 +1,30 @@
+export const Z_INDEX = {
+  base: 0,
+  decorative: 10,
+  floating: 20,
+  sticky: 50,
+  navbar: 100,
+  dropdown: 200,
+  overlay: 500,
+  modal: 1000,
+  toast: 1100,
+} as const;
+
+export const PALETTE = {
+  bgPrimary: '#07080A',
+  bgSurface: '#0E1117',
+  bgElevated: '#161B24',
+  bgHover: '#1E2430',
+  textPrimary: '#F8FAFC',
+  textSecondary: '#94A3B8',
+  textMuted: '#64748B',
+  borderSubtle: '#1E2634',
+  borderMedium: '#2D3748',
+  borderActive: '#00E5FF',
+  accentCyan: '#00E5FF',
+  accentBlue: '#0284C7',
+  accentGlow: 'rgba(0, 229, 255, 0.12)',
+  success: '#10B981',
+  warning: '#F59E0B',
+  error: '#EF4444',
+} as const;

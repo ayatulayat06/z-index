@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" fill="none">
+  <defs>
+    <linearGradient id="avatarGrad_rob" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0E1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#07080A"/>
+  <circle cx="200" cy="200" r="180" fill="url(#avatarGrad_rob)" stroke="#1E2634" stroke-width="2"/>
+  <circle cx="200" cy="200" r="140" fill="#0E1117" stroke="#10B981" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <!-- Holographic Head/Shoulders Tech Iconography -->
+  <circle cx="200" cy="150" r="45" fill="#161B24" stroke="#10B981" stroke-width="2"/>
+  <path d="M 120 270 C 120 215, 280 215, 280 270 Z" fill="#161B24" stroke="#10B981" stroke-width="2"/>
+  <!-- Division identifier node -->
+  <rect x="120" y="315" width="160" height="30" rx="6" fill="#07080A" stroke="#10B981" stroke-width="1.5"/>
+  <text x="200" y="335" text-anchor="middle" fill="#10B981" font-family="monospace" font-size="12" font-weight="bold">ROBOTICS</text>
+  <!-- Technical corner tags -->
+  <text x="30" y="45" fill="#64748B" font-family="monospace" font-size="10">ID: Z-ROB-01</text>
+  <text x="370" y="45" text-anchor="end" fill="#64748B" font-family="monospace" font-size="10">ACTIVE</text>
+</svg>

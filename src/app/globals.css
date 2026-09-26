@@ -1,0 +1,123 @@
+﻿@import "tailwindcss";
+
+:root {
+  --bg-primary: #07080a;
+  --bg-surface: #0b0e14;
+  --bg-surface-elevated: #121824;
+  --bg-surface-hover: #182232;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-subtle: #1a2230;
+  --border-medium: #273448;
+  --border-active: #00e5ff;
+  --accent-cyan: #00e5ff;
+  --accent-blue: #0284c7;
+  --accent-glow: rgba(0, 229, 255, 0.12);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+
+  /* Centralized Z-Index Stacking System */
+  --z-base: 0;
+  --z-decorative: 10;
+  --z-floating: 20;
+  --z-sticky: 50;
+  --z-navbar: 100;
+  --z-dropdown: 200;
+  --z-overlay: 500;
+  --z-modal: 1000;
+  --z-toast: 1100;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #07080a;
+  color: #f8fafc;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Centralized Stacking Classes */
+.z-stack-base { z-index: 0; }
+.z-stack-decorative { z-index: 10; }
+.z-stack-floating { z-index: 20; }
+.z-stack-sticky { z-index: 50; }
+.z-stack-navbar { z-index: 100; }
+.z-stack-dropdown { z-index: 200; }
+.z-stack-overlay { z-index: 500; }
+.z-stack-modal { z-index: 1000; }
+.z-stack-toast { z-index: 1100; }
+
+/* Neo-Tech Minimal Visual System */
+.tech-grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(30, 38, 52, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 38, 52, 0.4) 1px, transparent 1px);
+}
+
+.tech-radial-glow {
+  background: radial-gradient(circle at 50% 10%, rgba(0, 229, 255, 0.08) 0%, transparent 65%);
+}
+
+.tech-card {
+  background-color: #0b0e14;
+  border: 1px solid #1a2230;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tech-card:hover {
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.12);
+}
+
+.tech-mono {
+  font-family: var(--font-geist-mono), monospace;
+}
+
+/* Layer Depth Shadows */
+.shadow-depth-1 {
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.5);
+}
+
+.shadow-depth-2 {
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.shadow-depth-3 {
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(0, 229, 255, 0.15);
+}
+
+/* Custom Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07080a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2634;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00e5ff;
+}
+
+/* Reduced Motion Accessibility Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
