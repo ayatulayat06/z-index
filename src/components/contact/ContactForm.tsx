@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
@@ -29,7 +29,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
@@ -52,13 +52,49 @@ export const ContactForm: React.FC<ContactFormProps> = ({
     }
 
     if (website.trim()) return;
-    openContactEmail({ name, email, projectType, scope, message, member: preselectedMember });
-    setStatus('success');
-    toast({
-      title: 'Email Draft Ready',
-      message: 'Your email app opened with the inquiry. Review it and press Send to submit.',
-      type: 'success',
-    });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          projectType,
+          scope,
+          message,
+          member: preselectedMember,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Unable to send your message right now.');
+      }
+
+      setStatus('success');
+      toast({
+        title: 'Message Sent',
+        message: data.message || 'Your message was sent successfully.',
+        type: 'success',
+      });
+    } catch (error) {
+      const errorText = error instanceof Error ? error.message : 'Unable to send your message right now.';
+      setErrorMessage(errorText);
+      setStatus('error');
+
+      if (errorText.includes('Email delivery is not configured yet')) {
+        openContactEmail({ name, email, projectType, scope, message, member: preselectedMember });
+        toast({
+          title: 'Email fallback',
+          message: 'No delivery service is configured yet, so your mail app was opened instead.',
+          type: 'info',
+        });
+      }
+    }
   };
 
   const handleReset = () => {
