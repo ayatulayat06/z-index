@@ -5,6 +5,7 @@ import { Modal } from './Modal';
 import { Button } from './Button';
 import { useToast } from './Toast';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { openContactEmail } from '@/lib/contact';
 
 interface StartProjectModalProps {
   isOpen: boolean;
@@ -26,10 +27,9 @@ export const StartProjectModal: React.FC<StartProjectModalProps> = ({
   const [scope, setScope] = useState('');
   const [message, setMessage] = useState('');
   const [website, setWebsite] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) {
       toast({
@@ -40,35 +40,14 @@ export const StartProjectModal: React.FC<StartProjectModalProps> = ({
       return;
     }
 
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, projectType: division, scope, message, member: preselectedMember, website }),
-      });
-      const result = (await response.json()) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(result.error || 'We could not send your project brief. Please try again.');
-      }
-
-      setSubmitted(true);
-      toast({
-        title: 'Project Brief Dispatched',
-        message: `Your inquiry has been emailed to Z-INDEX for the ${division} division.`,
-        type: 'success',
-      });
-    } catch (error) {
-      toast({
-        title: 'Message Not Sent',
-        message: error instanceof Error ? error.message : 'Please try again later.',
-        type: 'error',
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    if (website.trim()) return;
+    openContactEmail({ name, email, projectType: division, scope, message, member: preselectedMember });
+    setSubmitted(true);
+    toast({
+      title: 'Email Draft Ready',
+      message: 'Review the inquiry in your email app and press Send to submit it.',
+      type: 'success',
+    });
   };
 
   const handleReset = () => {
@@ -97,11 +76,9 @@ export const StartProjectModal: React.FC<StartProjectModalProps> = ({
           <div className="w-14 h-14 mx-auto rounded-full bg-[#10B981]/10 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] mb-4">
             <CheckCircle2 size={32} />
           </div>
-          <h4 className="text-xl font-bold text-[#F8FAFC] mb-2">Transmission Acknowledged</h4>
+          <h4 className="text-xl font-bold text-[#F8FAFC] mb-2">Email Draft Ready</h4>
           <p className="text-sm text-[#94A3B8] max-w-md mx-auto mb-6 leading-relaxed">
-            Your project brief has been emailed to our {division} team.
-            We will review your requirements and reach out directly at{' '}
-            <span className="text-[#00E5FF] tech-mono">{email}</span>.
+            Your email app should have opened with the project brief addressed to our {division} team. Review it and press Send to submit it.
           </p>
           <Button variant="primary" onClick={handleReset}>
             Close Dialogue
@@ -198,14 +175,13 @@ export const StartProjectModal: React.FC<StartProjectModalProps> = ({
 
           <div className="pt-2 flex items-center justify-between border-t border-[#1A2230]">
             <span className="text-xs text-[#64748B] tech-mono">
-              ENCRYPTED DIRECT CHANNEL // NO TRACKERS
+              OPENS YOUR EMAIL APP TO SEND
             </span>
             <Button
               type="submit"
-              disabled={isSubmitting}
               icon={<ArrowRight size={16} />}
             >
-              {isSubmitting ? 'Transmitting...' : 'Dispatch Brief →'}
+              Dispatch Brief →
             </Button>
           </div>
         </form>

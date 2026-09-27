@@ -59,7 +59,7 @@ The company identity directly drives the visual and structural architecture thro
 - `/services` — Overview of all four divisions with in-depth capabilities and specifications.
 - `/services/[service]` — Division-level deep dive into capabilities, engineering processes, deployed tech, and associated case studies.
 - `/contact` — Dual architecture:
-  - **Section A**: Encrypted Contact Form with real-time accessible validation and direct division inboxes.
+  - **Section A**: Contact form with real-time accessible validation that prepares an inquiry in the visitor's email app.
   - **Section B**: Meet the Team roster with professional cards, skills, and direct inquiry routing.
 - `/team/[member]` & `/contact/[member]` — Detailed individual team member profiles showing responsibilities, associated case studies, and contact options.
 - `/faq` — Accessible accordion repository organized by General, Services, Projects, and Technical categories.
@@ -94,6 +94,20 @@ npm run build
 ```bash
 npm start
 ```
+
+### Deploy to Firebase Hosting (Static Export)
+
+This project exports static pages to `out/` and serves them through Firebase Hosting. The contact forms open the visitor's email app; email delivery requires the visitor to press Send.
+
+```bash
+npm run build
+npm install -g firebase-tools
+firebase login
+firebase use --add
+firebase deploy
+```
+
+When `firebase use --add` prompts you, select the Firebase project you created. Firebase Hosting supports a no-cost Spark plan within its published quotas; this static deployment does not use App Hosting or a server function.
 
 ---
 

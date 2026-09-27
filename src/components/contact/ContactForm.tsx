@@ -1,9 +1,10 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
 import { useToast } from '../ui/Toast';
 import { Button } from '../ui/Button';
+import { openContactEmail } from '@/lib/contact';
 
 interface ContactFormProps {
   preselectedDivision?: string;
@@ -21,14 +22,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({
   const [scope, setScope] = useState('');
   const [message, setMessage] = useState('');
   const [website, setWebsite] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   const validateEmail = (val: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
@@ -50,30 +51,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({
       return;
     }
 
-    setStatus('loading');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, projectType, scope, message, member: preselectedMember, website }),
-      });
-      const result = (await response.json()) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(result.error || 'We could not send your message. Please try again.');
-      }
-
-      setStatus('success');
-      toast({
-        title: 'Transmission Received',
-        message: `Your inquiry has been emailed to Z-INDEX for the ${projectType} division.`,
-        type: 'success',
-      });
-    } catch (error) {
-      setStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'We could not send your message. Please try again.');
-    }
+    if (website.trim()) return;
+    openContactEmail({ name, email, projectType, scope, message, member: preselectedMember });
+    setStatus('success');
+    toast({
+      title: 'Email Draft Ready',
+      message: 'Your email app opened with the inquiry. Review it and press Send to submit.',
+      type: 'success',
+    });
   };
 
   const handleReset = () => {
@@ -93,11 +78,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
           <span className="tech-mono text-xs text-[#00E5FF] tracking-widest uppercase">
-            SECURE TRANSMISSION PROTOCOL
+            EMAIL INQUIRY
           </span>
         </div>
         <span className="tech-mono text-[10px] text-[#64748B]">
-          AES-256 ENCRYPTED RELAY
+          OPENS YOUR EMAIL APP
         </span>
       </div>
 
@@ -114,10 +99,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             <CheckCircle2 size={36} />
           </div>
           <h3 className="text-2xl font-bold text-[#F8FAFC]">
-            Inquiry Dispatched Successfully
+            Email Draft Opened
           </h3>
           <p className="text-sm text-[#94A3B8] max-w-md mx-auto leading-relaxed">
-            Thank you, <span className="text-[#F8FAFC] font-semibold">{name}</span>. Your inquiry has been sent to our {projectType} team. We will respond to <span className="text-[#00E5FF] tech-mono">{email}</span> within 24 operational hours.
+            Thank you, <span className="text-[#F8FAFC] font-semibold">{name}</span>. Your email app should have opened with the inquiry addressed to our {projectType} team. Review it and press Send to submit it.
           </p>
           <div className="pt-4">
             <Button variant="secondary" onClick={handleReset} icon={<RefreshCw size={14} />}>
@@ -150,7 +135,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 type="text"
                 required
                 value={name}
-                disabled={status === 'loading'}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
                 className="w-full bg-[#121824] border border-[#273448] text-[#F8FAFC] px-4 py-3 text-sm focus:outline-none focus:border-[#00E5FF] transition-colors disabled:opacity-50"
@@ -169,7 +153,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 type="email"
                 required
                 value={email}
-                disabled={status === 'loading'}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
                 className="w-full bg-[#121824] border border-[#273448] text-[#F8FAFC] px-4 py-3 text-sm focus:outline-none focus:border-[#00E5FF] transition-colors disabled:opacity-50"
@@ -188,7 +171,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               <select
                 id="contact-project-type"
                 value={projectType}
-                disabled={status === 'loading'}
                 onChange={(e) => setProjectType(e.target.value)}
                 className="w-full bg-[#121824] border border-[#273448] text-[#F8FAFC] px-4 py-3 text-sm focus:outline-none focus:border-[#00E5FF] transition-colors disabled:opacity-50"
               >
@@ -211,7 +193,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
                 id="contact-scope"
                 type="text"
                 value={scope}
-                disabled={status === 'loading'}
                 onChange={(e) => setScope(e.target.value)}
                 placeholder="EG. 1-3 Months / Production Phase"
                 className="w-full bg-[#121824] border border-[#273448] text-[#F8FAFC] px-4 py-3 text-sm focus:outline-none focus:border-[#00E5FF] transition-colors disabled:opacity-50"
@@ -231,7 +212,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
               required
               rows={5}
               value={message}
-              disabled={status === 'loading'}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Outline your project scope, technical specifications, existing stack, and timeline constraints..."
               className="w-full bg-[#121824] border border-[#273448] text-[#F8FAFC] p-4 text-sm focus:outline-none focus:border-[#00E5FF] transition-colors disabled:opacity-50"
@@ -258,12 +238,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({
 
             <Button
               type="submit"
-              disabled={status === 'loading'}
               variant="primary"
               size="md"
               icon={<ArrowRight size={16} />}
             >
-              {status === 'loading' ? 'Transmitting Data...' : 'Send Message →'}
+              Send Message →
             </Button>
           </div>
         </form>
