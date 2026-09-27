@@ -4,6 +4,8 @@ import { PROJECTS } from '@/data/portfolio';
 import { SERVICES } from '@/data/services';
 import { TEAM_MEMBERS } from '@/data/team';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_CONFIG.url;
 
