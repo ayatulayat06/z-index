@@ -25,7 +25,11 @@ export async function POST(request) {
       );
     }
 
-    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) {
+    const apiKey = process.env.RESEND_API_KEY;
+    const fromEmail = process.env.RESEND_FROM_EMAIL || process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
+    const toEmail = process.env.CONTACT_TO_EMAIL || process.env.EMAIL_TO || 'info.ayat06@gmail.com';
+
+    if (!apiKey || !fromEmail) {
       return NextResponse.json(
         {
           error: 'Email delivery is not configured yet. Please contact us by email.',
@@ -33,9 +37,6 @@ export async function POST(request) {
         { status: 503 }
       );
     }
-
-    const toEmail = process.env.CONTACT_TO_EMAIL || 'info.ayat06@gmail.com';
-    const fromEmail = process.env.RESEND_FROM_EMAIL;
 
     const html = `
       <div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6;">
