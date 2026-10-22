@@ -3,7 +3,7 @@ import { SITE_CONFIG } from '@/config/site';
 
 export const dynamic = 'force-static';
 
-export default function robots(): MetadataRoute.Robots {
+export default function robots(): MetadataRoute['Robots'] {
   return {
     rules: [
       {

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" fill="none">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E2634" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <linearGradient id="grad_10" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#07080A" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="#07080A"/>
+  <rect width="800" height="450" fill="url(#grid)"/>
+  <rect x="40" y="40" width="720" height="370" rx="8" fill="url(#grad_10)" stroke="#1E2634" stroke-width="1.5"/>
+  
+  <!-- Technical Frame Header -->
+  <line x1="40" y1="80" x2="760" y2="80" stroke="#1E2634" stroke-width="1"/>
+  <circle cx="60" cy="60" r="4" fill="#EF4444"/>
+  <circle cx="75" cy="60" r="4" fill="#F59E0B"/>
+  <circle cx="90" cy="60" r="4" fill="#10B981"/>
+  <text x="120" y="64" fill="#94A3B8" font-family="monospace" font-size="11" letter-spacing="1">Z-INDEX // ARCHITECTURE // Z:10</text>
+  <rect x="640" y="50" width="100" height="20" rx="4" fill="#0E1117" stroke="#10B981" stroke-width="1"/>
+  <text x="652" y="64" fill="#10B981" font-family="monospace" font-size="10" font-weight="bold">ROBOTICS</text>
+
+  <!-- Schematics visual -->
+  <g transform="translate(70, 110)">
+    <rect x="0" y="0" width="380" height="260" rx="6" fill="#0E1117" stroke="#1E2634" stroke-width="1"/>
+    <text x="20" y="35" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Kinetic Axis Controller</text>
+    <text x="20" y="60" fill="#94A3B8" font-family="monospace" font-size="12">MODULE TELEMETRY &amp; SPECIFICATION</text>
+    <line x1="20" y1="75" x2="360" y2="75" stroke="#1E2634" stroke-width="1"/>
+    <text x="20" y="105" fill="#64748B" font-family="monospace" font-size="11">> stepper.ramp(accel=1200steps/s)</text>
+    <text x="20" y="130" fill="#64748B" font-family="monospace" font-size="11">> home_switch.poll(int_pin=2)</text>
+    <text x="20" y="155" fill="#10B981" font-family="monospace" font-size="11">> ok: position_repeatability_0.05mm</text>
+    <text x="20" y="180" fill="#64748B" font-family="monospace" font-size="11">> gcode.execute(recipe_04)</text>
+    <rect x="20" y="210" width="160" height="28" rx="4" fill="#161B24" stroke="#2D3748" stroke-width="1"/>
+    <text x="32" y="228" fill="#F8FAFC" font-family="monospace" font-size="11">STATUS: VERIFIED</text>
+  </g>
+
+  <!-- Layer Stack Isometric graphic on right -->
+  <g transform="translate(500, 130)">
+    <polygon points="120,20 220,70 120,120 20,70" fill="#161B24" stroke="#10B981" stroke-width="1.5" opacity="0.9"/>
+    <text x="80" y="75" fill="#10B981" font-family="monospace" font-size="10" font-weight="bold">LAYER 10</text>
+    <polygon points="120,60 220,110 120,160 20,110" fill="#0E1117" stroke="#2D3748" stroke-width="1" opacity="0.7"/>
+    <polygon points="120,100 220,150 120,200 20,150" fill="#07080A" stroke="#1E2634" stroke-width="1" opacity="0.5"/>
+  </g>
+</svg>

@@ -38,7 +38,7 @@ export default async function MemberDetailPage({ params }: MemberPageProps) {
   const member = TEAM_MEMBERS.find((m) => m.slug === slug);
 
   if (!member) {
-    notFound();
+    return null;
   }
 
   const memberProjects = PROJECTS.filter((p) =>

@@ -1,12 +1,10 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import {
   Terminal,
   Palette,
   Cpu,
   Globe,
   ArrowRight,
-  CheckCircle2,
   Layers,
   Compass,
   Zap,

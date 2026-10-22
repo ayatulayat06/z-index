@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,22 +14,18 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "types": ["vite/client"],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "next": ["./src/compat/next/index.ts"],
+      "next/link": ["./src/compat/next/link.tsx"],
+      "next/image": ["./src/compat/next/image.tsx"],
+      "next/navigation": ["./src/compat/next/navigation.ts"],
+      "next/font/google": ["./src/compat/next/font-google.ts"],
+      "next/server": ["./src/compat/next/server.ts"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
+  "include": ["src", "vite.config.ts"],
   "exclude": ["node_modules"]
 }
