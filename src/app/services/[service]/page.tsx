@@ -36,7 +36,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
   const service = SERVICES.find((s) => s.slug === slug);
 
   if (!service) {
-    notFound();
+    return null;
   }
 
   const relatedProjects = PROJECTS.filter((p) =>
